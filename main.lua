@@ -7,19 +7,33 @@ function love.load()
     bloco.y = 64*2
     bloco.width = 64
     bloco.height = 64
-    bloco.angle = 0
-    quad = love.graphics.newQuad(0, 0, 64, 64, bloco.sprite:getDimensions())
+    bloco.pos = 0
+    quad = love.graphics.newQuad(bloco.pos, 0, 64, 64, bloco.sprite:getDimensions())
 end
 
 function geraBloco()
-    local pos = 1
+    
+    local newBloco = {
+        sprite = bloco.sprite,
+        x = bloco.x,
+        y = bloco.y,
+        width = bloco.width,
+        height = bloco.height,
+        quad = love.graphics.newQuad(bloco.pos, 0, 64, 64, bloco.sprite:getDimensions())
+    }
 
+    table.insert(linhas, newBloco)
+
+    local pos = 1
     while pos % 64 ~= 0 do
         pos = math.random(0, (896 - 64))
     end
+
+    bloco.pos = pos
     bloco.x = 64*2
     bloco.y = 64*2
-    quad = love.graphics.newQuad(pos, 0, 64, 64, bloco.sprite:getDimensions())
+
+    quad = love.graphics.newQuad(bloco.pos, 0, 64, 64, bloco.sprite:getDimensions())
 end
 function wallCollision()
     if bloco.x < 0 then
@@ -56,13 +70,12 @@ function love.update(dt)
             bloco.x = bloco.x + bloco.width
         end
     end
-
-    -- if love.keyboard.isDown('space') then
-    --     pos = geraBloco()
-    --     quad = love.graphics.newQuad(pos, 0, 64, 64, bloco.sprite:getDimensions())
-    -- end
 end
 
 function love.draw()
-    love.graphics.draw(bloco.sprite, quad, bloco.x, bloco.y, bloco.angle, 1, 1, 0, 0)
+    love.graphics.draw(bloco.sprite, quad, bloco.x, bloco.y)
+
+    for i, bl in ipairs(linhas) do
+        love.graphics.draw(bl.sprite, bl.quad, bl.x, bl.y)
+    end
 end
