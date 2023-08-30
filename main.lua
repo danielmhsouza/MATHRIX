@@ -1,50 +1,58 @@
 local block = {}
 local lines = {}
-local pontos = {}
-local musicas = {}
-local fundos = {}
+local points = {}
+local musics = {}
+local backgrounds = {}
+local theme = 'oriental'
 local collision = require('./scripts/collision')
 local blocks = require('./scripts/blocks')
 
 function love.load()
-    fundos.ilha = love.graphics.newImage("asset/sprites/backisland.png")
-    fundos.oriental = love.graphics.newImage("asset/sprites/backisland.png")
+    backgrounds['island'] = love.graphics.newImage("asset/sprites/backisland.png")
+    backgrounds['oriental'] = love.graphics.newImage("asset/sprites/backoriental.png")
 
-    block.sprite = love.graphics.newImage("asset/sprites/sp_blocks_ilha.png")
-    block.sprite2 = love.graphics.newImage("asset/sprites/sp_blocks_oriental.png")
+    musics['island'] = love.audio.newSource("asset/songs/coconut-island.mp3", 'stream')
+    musics['oriental'] = love.audio.newSource("asset/songs/oriental-adventure.mp3", 'stream')
+    musics['space'] = love.audio.newSource("asset/songs/space-blocs.mp3", 'stream')
+    musics.mover = love.audio.newSource("asset/songs/move-bloc.mp3", 'stream')
 
-    musicas.ilha = love.audio.newSource("asset/songs/coconut-island.mp3", 'stream')
-    musicas.oriental = love.audio.newSource("asset/songs/oriental-adventure.mp3", 'stream')
-    musicas.space = love.audio.newSource("asset/songs/space-blocs.mp3", 'stream')
-    musicas.mover = love.audio.newSource("asset/songs/move-bloc.mp3", 'stream')
-    musicas.ilha:setLooping(true)
-    -- musicas.mover:setLooping(false)
-    musicas.ilha:play()
+    musics[theme]:setLooping(true)
+    musics[theme]:play()
 
-    pontos.font = love.graphics.newFont(24)
-    pontos.text = "0000"
-    love.graphics.setFont(pontos.font)
+    points.font = love.graphics.newFont(24)
+    points.text = "0000"
+    love.graphics.setFont(points.font)
 
+    block.sprite = {
+        ['island'] = love.graphics.newImage("asset/sprites/sp_blocks_island.png"),
+        ['oriental'] = love.graphics.newImage("asset/sprites/sp_blocks_oriental.png")
+    }
     block.x = 64 * 2
     block.y = 64 * 2
     block.width = 64
     block.height = 64
     block.pos = 0
-    block.quad = love.graphics.newQuad(block.pos, 0, 64, 64, block.sprite:getDimensions())
+    block.quad = love.graphics.newQuad(block.pos, 0, 64, 64, block.sprite[theme]:getDimensions())
 end
 
 function love.update(dt)
     collision.wall(block)
 
     function love.keypressed(key)
-        musicas.mover:play()
+        musics.mover:play()
 
         if key == "space" then
             if block.y ~= 128 then
                 local newBlock = nil
-                newBlock, block.x, block.y, block.quad = blocks.newBlock(block)
+                newBlock, block.x, block.y, block.quad = blocks.newBlock(block, theme)
                 table.insert(lines, newBlock)
             end
+        end
+
+        if key == 'r' then
+            lines = {}
+            block.x, block.y, block.pos = 64*2, 64*2, 0
+            block.quad = love.graphics.newQuad(block.pos, 0, 64, 64, block.sprite[theme]:getDimensions())
         end
 
         if key == "up" then
@@ -74,9 +82,9 @@ function love.update(dt)
 end
 
 function love.draw()
-    love.graphics.draw(fundos.ilha, 0, 0)
-    love.graphics.print(pontos.text, 130, 84)
-    love.graphics.draw(block.sprite, block.quad, block.x, block.y)
+    love.graphics.draw(backgrounds[theme], 0, 0)
+    love.graphics.print(points.text, 130, 84)
+    love.graphics.draw(block.sprite[theme], block.quad, block.x, block.y)
 
     for i, bl in ipairs(lines) do
         love.graphics.draw(bl.sprite, bl.quad, bl.x, bl.y)

@@ -1,8 +1,8 @@
 local blocks = {
-    newBlock = function (block)
+    newBlock = function (block, theme)
 
         local newBlock = {
-            sprite = block.sprite,
+            sprite = block.sprite[theme],
             x = block.x,
             y = block.y,
             width = block.width,
@@ -18,7 +18,7 @@ local blocks = {
         local bpos = pos
         local x = 64 * 2
         local y = 64 * 2
-        local quad = love.graphics.newQuad(bpos, 0, 64, 64, block.sprite:getDimensions())
+        local quad = love.graphics.newQuad(bpos, 0, 64, 64, block.sprite[theme]:getDimensions())
 
         return newBlock, x, y, quad
     end
