@@ -1,11 +1,15 @@
 local points = {}
+local isRunning = false
 local theme = 'island'
 local Background = require('Obj.Background')
 local Music = require('Obj.Music')
 local Block = require('Obj.Block')
 local Lines = require('Obj.Lines')
+local Menu = require('Obj.Menu')
 
 function love.load()
+
+    Menu:load()
 
     Background:load(theme)
     Music:load(theme)
@@ -18,6 +22,8 @@ function love.load()
 end
 
 function love.update(dt)
+    Menu:update()
+    isRunning = not Menu.state
     function love.keypressed(key)
         Music:update()
         Block:update(Lines, key)
@@ -26,8 +32,12 @@ function love.update(dt)
 end
 
 function love.draw()
-    Background:draw()
-    love.graphics.print(points.text, 130, 84)
-    Block:draw()
-    Lines:draw()
+    if isRunning then
+        Background:draw()
+        love.graphics.print(points.text, 130, 84)
+        Block:draw()
+        Lines:draw()
+    else
+        Menu:draw()
+    end
 end
