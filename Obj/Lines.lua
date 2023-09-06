@@ -1,6 +1,6 @@
 local Lines = {}
 Lines.blocks = {}
-Lines.points = 0
+Lines.points = '0000'
 
 Lines.positionsY = {
     [192] = 0,
@@ -11,11 +11,11 @@ Lines.positionsY = {
     [512] = 0,
 }
 Lines.positionsX = {
-    column1 = { qtd = 0, pos = 0 },
-    column2 = { qtd = 0, pos = 0 },
-    column3 = { qtd = 0, pos = 0 },
-    column4 = { qtd = 0, pos = 0 },
-    column5 = { qtd = 0, pos = 0 },
+    [0] = 0,
+    [64] = 0,
+    [128] = 0,
+    [192] = 0,
+    [256] = 0
 }
 
 
@@ -62,11 +62,44 @@ function Lines:verifyBlocks()
             end
         end
     end
+
+    -- verificando colunas
+    for j, ps in pairs(self.positionsX) do
+        if ps == 6 then
+            local bls = {}
+            -- salvando valores dos blocos em uma lista
+            for index, bl in ipairs(self.blocks) do
+                if bl.x == j then
+                    table.insert(bls, bl.value)
+                end
+            end
+
+            -- verificando se valores são primos
+            local isPrime = true
+            for key, number in pairs(bls) do
+                for k = 2, math.sqrt(number) do
+                    if number % k == 0 then
+                        isPrime = false -- Encontrou um divisor, não é primo
+                    end
+                end
+            end
+
+            -- apagando blocos da coluna
+            if isPrime then
+                self.points = tonumber(self.points) + 1500
+                self:destroyColumn(j)
+            end
+        end
+    end
 end
 
 function Lines:destroyLine(y)
     local i = #self.blocks
+
     self.positionsY[y] = 0
+    for j, n in pairs(self.positionsX) do
+       self.positionsX[j]  = self.positionsX[j] - 1
+    end
     while i > 0 do
         if self.blocks[i].y == y then
             table.remove(self.blocks, i)
@@ -75,8 +108,23 @@ function Lines:destroyLine(y)
     end
 end
 
+function Lines:destroyColumn(x)
+    local i = #self.blocks
+    self.positionsX[x] = 0
+    for j, n in pairs(self.positionsY) do
+        self.positionsY[j]  = self.positionsY[j] - 1
+     end
+    while i > 0 do
+        if self.blocks[i].x == x then
+            table.remove(self.blocks, i)
+        end
+        i = i - 1
+    end
+end
+
 function Lines:savePosition(newBlock)
     self.positionsY[newBlock.y] = self.positionsY[newBlock.y] + 1
+    self.positionsX[newBlock.x] = self.positionsX[newBlock.x] + 1
 end
 
 function Lines:update(block, key)
@@ -84,7 +132,7 @@ function Lines:update(block, key)
         Lines.blocks = {}
         block.x, block.y, block.pos = 64 * 2, 64 * 2, 0
         block.quad = love.graphics.newQuad(block.pos, 0, 64, 64, block.sprite[block.theme]:getDimensions())
-        self.points = 0000
+        self.points = '0000'
         self.positionsY = {
             [192] = 0,
             [256] = 0,
@@ -94,11 +142,11 @@ function Lines:update(block, key)
             [512] = 0,
         }
         self.positionsX = {
-            column1 = { qtd = 0, pos = 0 },
-            column2 = { qtd = 0, pos = 0 },
-            column3 = { qtd = 0, pos = 0 },
-            column4 = { qtd = 0, pos = 0 },
-            column5 = { qtd = 0, pos = 0 },
+            [0] = 0,
+            [64] = 0,
+            [128] = 0,
+            [192] = 0,
+            [256] = 0
         }
     end
 
