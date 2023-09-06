@@ -1,5 +1,20 @@
 local Block = {}
-
+Block.mapValues = {
+    [0] = 2,
+    [64] = 3,
+    [128] = 4,
+    [192] = 5,
+    [256] = 6,
+    [320] = 8,
+    [384] = 9,
+    [448] = 10,
+    [512] = 12,
+    [576] = 14,
+    [640] = 15,
+    [704] = 16,
+    [768] = 18,
+    [832] = 20
+}
 function Block:load(theme)
     self.sprite = {
         ['island'] = love.graphics.newImage("asset/sprites/sp_blocks_island.png"),
@@ -10,20 +25,23 @@ function Block:load(theme)
     self.width = 64
     self.height = 64
     self.pos = 0
+    self.value = 2
     self.quad = love.graphics.newQuad(self.pos, 0, 64, 64, self.sprite[theme]:getDimensions())
     self.theme = theme
 end
 
 function Block:create()
+    self.value = self.mapValues[self.pos]
+
     return {
         sprite = self.sprite[self.theme],
         x = self.x,
         y = self.y,
         width = self.width,
         height = self.height,
-        quad = self.quad
+        quad = self.quad,
+        value = self.value
     }
-    
 end
 
 function Block:collisionBlocksOnLines(lines)
@@ -36,7 +54,6 @@ function Block:collisionBlocksOnLines(lines)
 end
 
 function Block:update(lines, key)
-
     if key == "up" then
         self.y = self.y - self.height
         if self:collisionBlocksOnLines(lines) then

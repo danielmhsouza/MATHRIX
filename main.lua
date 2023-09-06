@@ -8,14 +8,13 @@ local Lines = require('Obj.Lines')
 local Menu = require('Obj.Menu')
 
 function love.load()
-
     Menu:load()
 
     Background:load(theme)
     Music:load(theme)
 
     points.font = love.graphics.newFont(24)
-    points.text = "0000"
+    points.text = Lines.points
     love.graphics.setFont(points.font)
 
     Block:load(theme)
@@ -28,6 +27,8 @@ function love.update(dt)
         Music:update()
         Block:update(Lines, key)
         Lines:update(Block, key)
+
+        points.text = Lines.points
     end
 end
 
