@@ -1,11 +1,12 @@
 local points = {}
 local isRunning = false
-local theme = 'island'
+local theme = 'menu'
 local Background = require('Obj.Background')
 local Music = require('Obj.Music')
 local Block = require('Obj.Block')
 local Lines = require('Obj.Lines')
 local Menu = require('Obj.Menu')
+local run = 0
 
 function love.load()
     Menu:load()
@@ -22,6 +23,14 @@ end
 
 function love.update(dt)
     Menu:update()
+    theme = Menu.theme
+    if theme ~= 'menu' and run == 0 then
+        Music['menu']:stop()
+        Background:load(theme)
+        Music:load(theme)
+        Block:load(theme)
+        run = 1
+    end
     isRunning = not Menu.state
     function love.keypressed(key)
         Music:update()

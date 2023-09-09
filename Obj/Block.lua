@@ -17,6 +17,7 @@ Block.mapValues = {
 }
 function Block:load(theme)
     self.sprite = {
+        ['menu'] = love.graphics.newImage("asset/sprites/sp_blocks_island.png"),
         ['island'] = love.graphics.newImage("asset/sprites/sp_blocks_island.png"),
         ['oriental'] = love.graphics.newImage("asset/sprites/sp_blocks_oriental.png")
     }
