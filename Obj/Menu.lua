@@ -28,6 +28,7 @@ end
 
 function Menu:draw()
     love.graphics.draw(self.background, 0, 0)
+    love.graphics.print('000000', 118, 100)
     GUI:draw()
 end
 
