@@ -55,24 +55,24 @@ function Block:collisionBlocksOnLines(lines)
 end
 
 function Block:update(lines, key)
-    if key == "up" then
+    if key == "up" or key == "w" then
         self.y = self.y - self.height
         if self:collisionBlocksOnLines(lines) then
             self.y = self.y + self.height
         end
-    elseif key == 'down' then
+    elseif key == 'down' or key == "s" then
         self.y = self.y + self.height
         if self:collisionBlocksOnLines(lines) then
             self.y = self.y - self.height
         end
     end
 
-    if key == "left" then
+    if key == "left" or key == "a" then
         self.x = self.x - self.width
         if self:collisionBlocksOnLines(lines) then
             self.x = self.x + self.width
         end
-    elseif key == 'right' then
+    elseif key == 'right' or key == "d" then
         self.x = self.x + self.width
         if self:collisionBlocksOnLines(lines) then
             self.x = self.x - self.width
