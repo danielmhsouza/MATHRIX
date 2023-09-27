@@ -20,6 +20,11 @@ function Menu:load()
         self.theme = 'island'
         Menu.state = false
     end)
+    
+    GUI:newButton(63, 435, 195, 63, '', function ()
+        self.theme = 'space'
+        Menu.state = false
+    end)
 end
 
 function Menu:update()

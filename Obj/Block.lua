@@ -19,7 +19,8 @@ function Block:load(theme)
     self.sprite = {
         ['menu'] = love.graphics.newImage("asset/sprites/sp_blocks_island.png"),
         ['island'] = love.graphics.newImage("asset/sprites/sp_blocks_island.png"),
-        ['oriental'] = love.graphics.newImage("asset/sprites/sp_blocks_oriental.png")
+        ['oriental'] = love.graphics.newImage("asset/sprites/sp_blocks_oriental.png"),
+        ['space'] = love.graphics.newImage("asset/sprites/sp_blocks_space.png")
     }
     self.x = 64 * 2
     self.y = 64 * 2

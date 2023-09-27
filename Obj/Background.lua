@@ -4,6 +4,7 @@ Background.backgrounds = {}
 function Background:load(theme)
     self.backgrounds['island'] = love.graphics.newImage("asset/sprites/backisland.png")
     self.backgrounds['oriental'] = love.graphics.newImage("asset/sprites/backoriental.png")
+    self.backgrounds['space'] = love.graphics.newImage("asset/sprites/backspace.png")
     self.theme = theme
 end
 
