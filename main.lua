@@ -7,6 +7,7 @@ local Block = require('Obj.Block')
 local Lines = require('Obj.Lines')
 local Menu = require('Obj.Menu')
 local run = 0
+local debug = false
 
 function love.load()
     Menu:load()
@@ -24,6 +25,8 @@ end
 function love.update(dt)
     Menu:update()
     theme = Menu.theme
+    isRunning = not Menu.state
+
     if theme ~= 'menu' and run == 0 then
         Music['menu']:stop()
         Background:load(theme)
@@ -31,7 +34,16 @@ function love.update(dt)
         Block:load(theme)
         run = 1
     end
-    isRunning = not Menu.state
+
+    if theme == 'menu' and run == 1 then
+        Music['space']:stop()
+        Music['island']:stop()
+        Music['oriental']:stop()
+        Music['menu']:play()
+        Lines.points = '0000'
+        run = 0
+    end
+
     function love.keypressed(key)
         Music:update()
         Block:update(Lines, key)
@@ -47,6 +59,12 @@ function love.draw()
         love.graphics.print(points.text, 130, 84)
         Block:draw()
         Lines:draw()
+        Menu:drawOptions()
+
+        if debug then
+            love.graphics.print('-------------', 200, 10)
+            love.graphics.print(Menu.theme, 200, 30)
+        end
     else
         Menu:draw()
     end
