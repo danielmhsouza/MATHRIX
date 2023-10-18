@@ -8,6 +8,7 @@ local Lines = require('Obj.Lines')
 local Menu = require('Obj.Menu')
 local run = 0
 local debug = false
+local jsonm = require('Obj.json')
 
 function love.load()
     Menu:load()
@@ -50,6 +51,19 @@ function love.update(dt)
         Lines:update(Block, key)
 
         points.text = Lines.points
+    end
+
+    if tonumber(Lines.points) > tonumber(Menu.record) then
+        local json_record = 'json_record.json'
+        local file = io.open(json_record, 'w')
+        if file then
+            local data = {
+                record = Lines.points
+            }
+            local jsonString = jsonm.encode(data)
+            file:write(jsonString)
+            file:close()
+        end
     end
 end
 
