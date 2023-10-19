@@ -9,9 +9,9 @@
 
 ```
     love .
-
+```
     ou
-
+```
     love {caminho do repositorio}
 ```
 
@@ -19,6 +19,6 @@
 
 # Como o MATRHIX funciona:
 
-<p>As peças são geradas aleatóriamente e podem ser movidas com as **setas** ou com **WSAD** uma de cada vez, uma vez pozicionada onde quer, pode ser fixada com a barra de **ESPAÇO**.</p>
+<p>As peças são geradas aleatóriamente e podem ser movidas com as <b>setas</b>b ou com <b>WSAD</b> uma de cada vez, uma vez pozicionada onde quer, pode ser fixada com a barra de <b>ESPAÇO</b>.</p>
 <p>O objetivo é organizar os blocos de acordo com os números que ele representa, indo de 2 a 20, com excessão dos números 7, 11, 13, 17 e 19.</p>
-<p>Nas linhas horizontais deve-se colocar os numeros **MÚLTIPLOS** do MENOR número da linha, idependente de qual posição esteja. Na vertical, o objetivo é juntar números **PRIMOS**, ou seja: 2, 3 e 5.</p>
+<p>Nas linhas horizontais deve-se colocar os numeros <b>MÚLTIPLOS</b> do MENOR número da linha, idependente de qual posição esteja. Na vertical, o objetivo é juntar números <b>PRIMOS</b>, ou seja: 2, 3 e 5.</p>
