@@ -10,7 +10,7 @@
 ```
     love .
 ```
-    ou
+<p>ou</p>
 ```
     love {caminho do repositorio}
 ```
