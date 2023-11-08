@@ -42,6 +42,7 @@ function love.update(dt)
         Music['oriental']:stop()
         Music['menu']:play()
         Lines.points = '0000'
+        Lines.blocks = {}
         run = 0
     end
 
