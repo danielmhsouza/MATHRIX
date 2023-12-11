@@ -80,6 +80,10 @@ function love.draw()
             love.graphics.print('-------------', 200, 10)
             love.graphics.print(Menu.theme, 200, 30)
         end
+
+        if Lines.msg then
+            love.graphics.print("VOCÊ PERDEU! APERTE r.", 10, 290)
+        end
     else
         Menu:draw()
     end

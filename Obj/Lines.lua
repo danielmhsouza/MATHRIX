@@ -18,6 +18,7 @@ Lines.positionsX = {
     [256] = 0
 }
 
+Lines.msg = false
 
 function Lines:newBlock(block)
     local pos = 1
@@ -39,7 +40,7 @@ function Lines:verifyBlocks()
         if ps == 5 then
             local bls = {}
             -- salvando valores dos blocos em uma lista
-            for index, bl in ipairs(self.blocks) do
+            for _, bl in ipairs(self.blocks) do
                 if bl.y == i then
                     table.insert(bls, bl.value)
                 end
@@ -59,6 +60,8 @@ function Lines:verifyBlocks()
             if isMultiple then
                 self.points = tonumber(self.points) + 1000
                 self:destroyLine(i)
+            elseif not isMultiple and i == 192 then
+                self.msg = true
             end
         end
     end
@@ -130,6 +133,7 @@ end
 function Lines:update(block, key)
     if key == 'r' then
         Lines.blocks = {}
+        Lines.msg = false
         block.x, block.y, block.pos = 64 * 2, 64 * 2, 0
         block.quad = love.graphics.newQuad(block.pos, 0, 64, 64, block.sprite[block.theme]:getDimensions())
         self.points = '0000'
